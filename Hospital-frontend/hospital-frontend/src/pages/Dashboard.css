@@ -1,0 +1,50 @@
+body {
+  font-family: Arial;
+  background: #f5f7fa;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+.form {
+  background: white;
+  padding: 20px;
+  margin: 20px auto;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.form button {
+  padding: 10px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.list {
+  margin-top: 20px;
+}
+
+.card {
+  background: white;
+  margin: 10px auto;
+  padding: 15px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
