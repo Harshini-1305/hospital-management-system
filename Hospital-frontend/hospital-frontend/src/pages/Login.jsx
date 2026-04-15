@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../services/authService";
 
 export default function Login() {
   const [role, setRole] = useState("PATIENT");
@@ -14,10 +14,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(
-        "http://localhost:8080/auth/login",
-        { email, password }
-      );
+            const res = await loginUser({ email, password });
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);

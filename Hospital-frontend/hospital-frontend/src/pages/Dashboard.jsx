@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import { API_BASE_URL } from "../services/api";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -43,32 +44,32 @@ function Dashboard() {
   }, []);
 
   const loadDoctors = () => {
-    axios.get("http://localhost:8080/doctors", { headers: { Authorization: `Bearer ${token}` }})
+        axios.get(`${API_BASE_URL}/doctors`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => setDoctors(res.data))
     .catch(err => console.log(err));
   };
 
   const loadAppointments = () => {
-    axios.get("http://localhost:8080/appointments", { headers: { Authorization: `Bearer ${token}` }})
+        axios.get(`${API_BASE_URL}/appointments`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => setAppointments(res.data))
     .catch(err => console.log(err));
   };
 
   const loadPatients = () => {
-    axios.get("http://localhost:8080/auth/users", { headers: { Authorization: `Bearer ${token}` }})
+        axios.get(`${API_BASE_URL}/auth/users`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => setPatients(res.data.filter(u => u.role === 'PATIENT')))
     .catch(err => console.log(err));
   };
 
   const loadQueries = () => {
-    axios.get("http://localhost:8080/queries", { headers: { Authorization: `Bearer ${token}` }})
+        axios.get(`${API_BASE_URL}/queries`, { headers: { Authorization: `Bearer ${token}` }})
     .then(res => setQueries(res.data))
     .catch(err => console.log(err));
   };
 
   const handleCancelAppointment = (appId) => {
     const cancelStatus = role === 'DOCTOR' ? 'Cancelled by Doctor' : 'Cancelled by You';
-    axios.put(`http://localhost:8080/appointments/${appId}/status`, cancelStatus,
+        axios.put(`${API_BASE_URL}/appointments/${appId}/status`, cancelStatus,
       { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'text/plain' }}
     ).then(() => loadAppointments());
   };
@@ -76,7 +77,7 @@ function Dashboard() {
   const handleDeleteDoctor = (e) => {
     e.preventDefault();
     if (!deleteEmail) return alert("Please enter an Email ID");
-    axios.delete(`http://localhost:8080/doctors/by-email?email=${deleteEmail}`,
+        axios.delete(`${API_BASE_URL}/doctors/by-email?email=${deleteEmail}`,
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(() => {
       alert("Doctor deleted successfully!");
@@ -92,7 +93,7 @@ function Dashboard() {
   const handleAddDoctor = (e) => {
       e.preventDefault();
       if (docData.password !== docData.confirmPassword) return alert("Passwords do not match!");
-      axios.post("http://localhost:8080/doctors", 
+            axios.post(`${API_BASE_URL}/doctors`, 
         { name: docData.name, email: docData.email, specialization: docData.specialization, fees: docData.fees, password: docData.password },
         { headers: { Authorization: `Bearer ${token}` }}
       ).then(() => { 
@@ -113,7 +114,7 @@ function Dashboard() {
 
   const handleBook = () => {
     if (!selDocId || !selDate || !selTime) return alert("Please fill all fields.");
-    axios.post("http://localhost:8080/appointments",
+        axios.post(`${API_BASE_URL}/appointments`,
       { doctor: { id: selDocId }, date: selDate, time: selTime, consultancyFees: fees, status: "Active" },
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(() => {

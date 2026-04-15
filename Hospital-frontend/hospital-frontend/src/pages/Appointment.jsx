@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./Appointment.css";
+import { API_BASE_URL } from "../services/api";
 
 function Appointment() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ function Appointment() {
       navigate("/login");
       return;
     }
-    axios.get("http://localhost:8080/doctors", {
+    axios.get(`${API_BASE_URL}/doctors`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => setDoctors(res.data))
@@ -29,7 +30,7 @@ function Appointment() {
 
   // Load appointments
   useEffect(() => {
-    axios.get("http://localhost:8080/appointments", {
+    axios.get(`${API_BASE_URL}/appointments`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => setAppointments(res.data))
@@ -46,7 +47,7 @@ function Appointment() {
     setIsBooking(true);
     try {
       await axios.post(
-        "http://localhost:8080/appointments",
+        `${API_BASE_URL}/appointments`,
         {
           doctor: { id: doctorId },
           date: date,
@@ -62,7 +63,7 @@ function Appointment() {
 
       alert("Booking Successful! 📅");
       
-      const res = await axios.get("http://localhost:8080/appointments", {
+      const res = await axios.get(`${API_BASE_URL}/appointments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAppointments(res.data);

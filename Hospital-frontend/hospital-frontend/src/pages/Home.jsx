@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../services/api";
 
 export default function Home() {
   const [contact, setContact] = useState({ userName: "", email: "", phone: "", message: "" });
@@ -11,7 +12,7 @@ export default function Home() {
 
   const handleSend = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8080/queries", {
+    axios.post(`${API_BASE_URL}/queries`, {
       userName: contact.userName,
       email: contact.email,
       contact: contact.phone,

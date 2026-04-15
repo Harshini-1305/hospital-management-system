@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../services/authService";
 
 export default function Register() {
   const [role, setRole] = useState("PATIENT");
@@ -28,7 +28,7 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      await axios.post("http://localhost:8080/auth/register", {
+            await registerUser({
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
